@@ -93,6 +93,11 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
+    document.getElementById('winner-div').className='center'
+    document.getElementById('winner').innerText=
+        `Player ${currPlayer} wins`
+    window.scrollTo(0,0);
+
     alert(`Game Over: ${msg}`)
 }
 
