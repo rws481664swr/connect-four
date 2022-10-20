@@ -62,28 +62,37 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-    // TODO: write the real version of this, rather than always returning 0
-    return 0;
+    let col = board[x]
+    const index = col.indexOf(null)
+    if (index === -1) {
+        throw new Error("Cannot place piece here!")
+    }
+    return index
+    // // TODO: write the real version of this, rather than always returning 0
+    // return 0;
 }
-
 
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
     // TODO: make a div and insert into correct table cell
-    const div =document.createElement('div')
-    const id=`${y}-${x}`
-    document.getElementById(id).append(div)
-    div.className=`p${currPlayer} piece`
-    div.id=`${y}-${x}-p`
 
+    if (board[x][y]) {
+        throw new Error("Piece already there!")
+    }
+    const div = document.createElement('div')
+    const id = `${y}-${x}`
+    document.getElementById(id).append(div)
+    div.className = `p${currPlayer} piece`
+    div.id = `${y}-${x}-p`
+    board[x][y] = currPlayer
 }
 
 /** endGame: announce game end */
 
 function endGame(msg) {
-    // TODO: pop up alert message
+    alert(`Game Over: ${msg}`)
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -92,26 +101,30 @@ function handleClick({target}) {
     // get x from ID of clicked cell
     let x = +target.id;
 
-    // get next spot in column (if none, ignore click)
-    let y = findSpotForCol(x);
-    if (y === null) {
-        return;
-    }
 
     // place piece in board and add to HTML table
     // TODO: add line to update in-memory board
-    placeInTable(y, x);
+    try {
+        // get next spot in column (if none, ignore click)
+        y = findSpotForCol(x);
 
+        placeInTable(y, x);
+
+    } catch (e) {
+        alert(e)
+        return
+    }
     // check for win
     if (checkForWin()) {
         return endGame(`Player ${currPlayer} won!`);
     }
 
     // check for tie
-    // TODO: check if all cells in board are filled; if so call, call endGame
-
+    if (board.every(e => e.every(e => e !== null))) {
+        endGame("Tie!")
+    }
     // switch players
-    // TODO: switch currPlayer 1 <-> 2
+    currPlayer = currPlayer === 1 ? 2 : 1
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -122,6 +135,7 @@ function checkForWin() {
         //  - cells: list of four (y, x) cells
         //  - returns true if all are legal coordinates & all match currPlayer
 
+        //all current player via every
         return cells.every(
             ([y, x]) =>
                 y >= 0 &&
@@ -132,15 +146,18 @@ function checkForWin() {
         );
     }
 
-    // TODO: read and understand this code. Add comments to help you.
-
+    //each row
     for (let y = 0; y < HEIGHT; y++) {
+        //shift start col check
         for (let x = 0; x < WIDTH; x++) {
+
+            //four ways to win
             let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
             let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
             let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
             let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
+            //test all wins
             if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
                 return true;
             }
