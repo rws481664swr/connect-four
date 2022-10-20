@@ -16,7 +16,6 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
  */
 
 function makeBoard() {
-    // TODO: set "board" to empty HEIGHT x WIDTH matrix array
     for (let i = 0; i < WIDTH; i++) {
         let arr = []
         board.push(arr)
@@ -53,6 +52,11 @@ function makeHtmlBoard() {
             const cell = document.createElement("td");
             //add to table with id row-col
             cell.setAttribute("id", `${y}-${x}`);
+            document.addEventListener('click',e=> {
+                const id=e.target.id
+                console.log(`id : ${id}`)
+                console.log(board[id])
+            })
             row.append(cell);
         }
         htmlBoard.append(row);
@@ -62,23 +66,20 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-    let col = board[x]
-    const index = col.indexOf(null)
-    if (index === -1) {
-        throw new Error("Cannot place piece here!")
+    const col = board[x]
+    for (let i=col.length; i >= 0; i--){
+        if ( col[i]===null){
+            return i
+        }
     }
-    return index
-    // // TODO: write the real version of this, rather than always returning 0
-    // return 0;
 }
 
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-    // TODO: make a div and insert into correct table cell
-
     if (board[x][y]) {
+        //shouldn't run here
         throw new Error("Piece already there!")
     }
     const div = document.createElement('div')
@@ -100,19 +101,16 @@ function endGame(msg) {
 function handleClick({target}) {
     // get x from ID of clicked cell
     let x = +target.id;
-
+    console.log("X", x )
 
     // place piece in board and add to HTML table
-    // TODO: add line to update in-memory board
     try {
         // get next spot in column (if none, ignore click)
         y = findSpotForCol(x);
-
         placeInTable(y, x);
 
     } catch (e) {
-        alert(e)
-        return
+        return alert(e)
     }
     // check for win
     if (checkForWin()) {
