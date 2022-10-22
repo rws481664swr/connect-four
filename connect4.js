@@ -70,6 +70,7 @@ function findSpotForCol(x) {
             return i
         }
     }
+    return -1
 }
 
 
@@ -109,9 +110,10 @@ function handleClick({target}) {
     try {
         // get next spot in column (if none, ignore click)
         y = findSpotForCol(x);
+        if (y === -1) return alert('Column is full')
         placeInTable(y, x);
-
-    } catch (e) {
+    } catch
+        (e) {
         return alert(e)
     }
     // check for win
