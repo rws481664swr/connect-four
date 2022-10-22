@@ -9,7 +9,7 @@ const WIDTH = 7;
 const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
-let board ; // array of rows, each row is array of cells  (board[y][x])
+let board; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
@@ -17,7 +17,7 @@ let board ; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
 
-    board=[]
+    board = []
     for (let i = 0; i < WIDTH; i++) {
         let arr = []
         board.push(arr)
@@ -34,7 +34,7 @@ function makeHtmlBoard() {
 
     // get "htmlBoard" variable from the item in HTML w/ID of "board"
     const htmlBoard = document.getElementById('board')
-    htmlBoard.innerHTML=''
+    htmlBoard.innerHTML = ''
     //create "click column so that onclick can work
     let top = document.createElement("tr");
     top.setAttribute("id", "column-top");
@@ -65,8 +65,8 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
     const col = board[x]
-    for (let i=col.length; i >= 0; i--){
-        if ( col[i]===null){
+    for (let i = col.length; i >= 0; i--) {
+        if (col[i] === null) {
             return i
         }
     }
