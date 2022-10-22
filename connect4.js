@@ -164,8 +164,9 @@ function checkForWin() {
         }
     }
 }
-function init () {
-    currPlayer=1
+
+function init() {
+    currPlayer = 1
     makeBoard()
     makeHtmlBoard();
 }
