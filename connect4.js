@@ -91,10 +91,10 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
-    document.getElementById('winner-div').className='center'
-    document.getElementById('winner').innerText=
-        `Player ${currPlayer} wins`
-    window.scrollTo(0,0);
+    document.getElementById('winner-div').className = 'center'
+    document.getElementById('winner').innerText = msg
+
+    window.scrollTo(0, 0);
 
     alert(`Game Over: ${msg}`)
 }
@@ -116,12 +116,12 @@ function handleClick({target}) {
     }
     // check for win
     if (checkForWin()) {
-        return endGame(`Player ${currPlayer} won!`);
+        return endGame(`Player ${currPlayer} wins`);
     }
 
     // check for tie
     if (board.every(e => e.every(e => e !== null))) {
-        endGame("Tie!")
+        return endGame("Tie!")
     }
     // switch players
     currPlayer = currPlayer === 1 ? 2 : 1
