@@ -126,7 +126,10 @@ function handleClick({target}) {
         return endGame("Tie!")
     }
     // switch players
+    const turnPiece = document.querySelector('#turn-piece')
+    turnPiece.classList.remove(`p${currPlayer}`)
     currPlayer = currPlayer === 1 ? 2 : 1
+    turnPiece.classList.add(`p${currPlayer}`)
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -171,6 +174,7 @@ function init() {
     currPlayer = 1
     makeBoard()
     makeHtmlBoard();
+    document.querySelector('#turn-piece').classList.add('p1')
 }
 
 
