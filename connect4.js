@@ -174,9 +174,10 @@ function init() {
     currPlayer = 1
     makeBoard()
     makeHtmlBoard();
+    document.querySelector('#turn-piece').classList.remove('p2')
     document.querySelector('#turn-piece').classList.add('p1')
 }
-
+document.querySelector(`.replay`).addEventListener('click',init)
 
 init()
 
