@@ -176,6 +176,7 @@ function init() {
     makeHtmlBoard();
     document.querySelector('#turn-piece').classList.remove('p2')
     document.querySelector('#turn-piece').classList.add('p1')
+    document.querySelector('#winner').innerText=''
 }
 document.querySelector(`.replay`).addEventListener('click',init)
 
